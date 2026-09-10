@@ -54,7 +54,7 @@ async fn main() {
 
     //GET /privacy
     let route_privacy = warp::get()
-        .and(warp::path::end())
+        .and(warp::path::path("privacy"))
         .map(move || WithTemplate {
             name: "privacy.html",
             value: json!({}),
@@ -63,7 +63,7 @@ async fn main() {
 
     //GET /tos
     let route_tos = warp::get()
-        .and(warp::path::end())
+        .and(warp::path::path("tos"))
         .map(move || WithTemplate {
             name: "tos.html",
             value: json!({}),
