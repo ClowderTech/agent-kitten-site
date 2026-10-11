@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-ARG RUST_VERSION=1.98.1
+ARG RUST_VERSION=1.99.0
 ARG APP_NAME=agent-kitten-site
 ARG UID=1000
 
@@ -13,11 +13,13 @@ WORKDIR /app
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-    cmake=3.31.6-2 \
+    cmake \
+    libssl-dev \
+    ca-certificates \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-COPY Cargo.toml Cargo.lock ./
+COPY Cargo.toml Cargo.lock .cargo ./
 COPY src/ ./src/
 
 RUN --mount=type=cache,target=/app/target/ \
@@ -38,7 +40,6 @@ RUN groupadd \
     --system \
     appuser \ 
     && useradd \
-    --create-home \
     --uid "${UID}" \
     --gid "${UID}" \
     --no-log-init \
