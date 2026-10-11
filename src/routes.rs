@@ -1,3 +1,4 @@
+use chrono::{Datelike, Utc};
 use serde_json::{Value, json};
 
 pub struct Route {
@@ -12,7 +13,7 @@ impl Route {
             Route {
                 path: "",
                 template: "index.html",
-                data: || json!({}),
+                data: || json!({ "year": Utc::now().year() }),
             },
             Route {
                 path: "privacy",
